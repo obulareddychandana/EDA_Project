@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("data.csv")
+
+# Display basic info
+print("\n Dataset Shape:", df.shape)
+print("\n Columns:", df.columns.tolist())
+print("\n Data Types:\n", df.dtypes)
+print("\n First 5 Rows:\n", df.head())
+
+# Check for missing values
+print("\n Missing Values:\n", df.isnull().sum())
+
+# Summary statistics (Only numerical columns)
+print("\n Summary Statistics:\n", df.describe())
+
+# Check for duplicates
+print("\n Duplicate Rows:", df.duplicated().sum())
+
+# Data Visualizations
+
+# Age Distribution
+plt.figure(figsize=(8, 5))
+sns.histplot(df["Age"], bins=5, kde=True, color="blue")
+plt.title("Age Distribution")
+plt.xlabel("Age")
+plt.ylabel("Frequency")
+plt.show()
+
+# Boxplot for Salary
+plt.figure(figsize=(8, 5))
+sns.boxplot(x=df["Salary"], color="green")
+plt.title("Salary Distribution")
+plt.xlabel("Salary")
+plt.show()
+
+# Fix: Correlation Heatmap (Only Numeric Columns)
+plt.figure(figsize=(8, 5))
+sns.heatmap(df.select_dtypes(include=['number']).corr(), annot=True, cmap="coolwarm", linewidths=0.5)
+plt.title("Feature Correlation Heatmap")
+plt.show()
+
+# Count plot for Gender
+plt.figure(figsize=(6, 4))
+sns.countplot(x=df["Gender"], palette="coolwarm")
+plt.title("Gender Distribution")
+plt.show()
+
+# Purchase Amount vs. Age scatter plot
+plt.figure(figsize=(8, 5))
+sns.scatterplot(x=df["Age"], y=df["Purchase_Amount"], hue=df["Gender"], palette="coolwarm", s=100)
+plt.title("Purchase Amount vs Age")
+plt.xlabel("Age")
+plt.ylabel("Purchase Amount")
+plt.show()
